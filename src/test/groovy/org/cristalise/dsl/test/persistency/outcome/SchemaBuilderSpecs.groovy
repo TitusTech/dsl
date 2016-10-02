@@ -303,4 +303,319 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                </xs:element>
              </xs:schema>""")
     }
+
+    def 'Commodity'() {
+        expect:
+        SchemaTestBuilder.build('test', 'Commodity', 0) {
+            struct(name: 'Commodity') {
+                field(name: 'name',           type: 'string')
+                field(name: 'code',           type: 'string')
+                field(name: 'color',          type: 'string',  multiplicity:'0..1')
+            }
+        }.compareXML(
+            """<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                 <xs:element name="Commodity">
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element minOccurs="1" maxOccurs="1" name="name" type="xs:string"/>
+                       <xs:element minOccurs="1" maxOccurs="1" name="code" type="xs:string"/>
+                       <xs:element minOccurs="0" maxOccurs="1" name="color" type="xs:string"/>
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>""")
+    }
+
+    def 'Grade'() {
+        expect:
+        SchemaTestBuilder.build('test', 'Grade', 0) {
+            struct(name: 'Grade') {
+                field(name: 'name',           type: 'string')
+                field(name: 'code',           type: 'string')
+                field(name: 'color',          type: 'string',  multiplicity:'0..1')
+            }
+        }.compareXML(
+            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+                 <xs:element name='Grade'>
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='code' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='color' type='xs:string' minOccurs='0' maxOccurs='1' />
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>""")
+    }
+
+    def 'Season'() {
+        expect:
+        SchemaTestBuilder.build('test', 'Season', 0) {
+            struct(name: 'Season') {
+                field(name: 'name',           type: 'string')
+                field(name: 'code',           type: 'string')
+            }
+        }.compareXML(
+            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+                 <xs:element name='Season'>
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='code' type='xs:string' minOccurs='1' maxOccurs='1' />
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>""")
+    }
+
+    def 'Test'() {
+        expect:
+        SchemaTestBuilder.build('test', 'Test', 0) {
+            struct(name: 'Test') {
+                field(name: 'name',           type: 'string')
+                field(name: 'unit',           type: 'string')
+                field(name: 'min',            type: 'decimal')
+                field(name: 'max',            type: 'decimal')
+            }
+        }.compareXML(
+            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+                 <xs:element name='Test'>
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='unit' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='min' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='max' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>""")
+    }
+
+    def 'Treatment'() {
+        expect:
+        SchemaTestBuilder.build('test', 'Treatment', 0) {
+            struct(name: 'Treatment') {
+                field(name: 'name',           type: 'string')
+                field(name: 'type',           type: 'string', values: ['Pesticide', 'Other'])
+            }
+        }.compareXML(
+            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+                 <xs:element name='Treatment'>
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='type' minOccurs='1' maxOccurs='1'>
+                         <xs:simpleType>
+                           <xs:restriction base='xs:string'>
+                             <xs:enumeration value='Pesticide' />
+                             <xs:enumeration value='Other' />
+                           </xs:restriction>
+                         </xs:simpleType>
+                       </xs:element>
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>""")
+    }
+    
+    def 'Customer'() {
+        expect:
+        SchemaTestBuilder.build('test', 'Customer', 0) {
+            struct(name: 'Customer') {
+                field(name: 'name',           type: 'string')
+                field(name: 'shortName',      type: 'string')
+                field(name: 'address',        type: 'string')
+                field(name: 'phone',          type: 'string')
+                field(name: 'fax',            type: 'string')
+            }
+        }.compareXML(
+            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+                 <xs:element name='Customer'>
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='shortName' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='address' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='phone' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='fax' type='xs:string' minOccurs='1' maxOccurs='1' />
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>""")
+    }
+
+    def 'Weighbridge'() {
+        expect:
+        SchemaTestBuilder.build('test', 'Weighbridge', 0) {
+            struct(name: 'Weighbridge') {
+                field(name: 'name',        type: 'string')
+                field(name: 'posx',           type: 'decimal')
+                field(name: 'posy',           type: 'decimal')
+                field(name: 'width',          type: 'decimal')
+                field(name: 'height',         type: 'decimal')
+            }
+        }.compareXML(
+            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+                 <xs:element name='Weighbridge'>
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='posx' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='posy' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='width' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='height' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>""")
+    }
+
+    def 'Panel'() {
+        expect:
+        SchemaTestBuilder.build('test', 'Panel', 0) {
+            struct(name: 'Panel') {
+                field(name: 'name',           type: 'string')
+                field(name: 'orientation',    type: 'string', values: ['Horizontal', 'Vertical'])
+                field(name: 'posx',           type: 'decimal')
+                field(name: 'posy',           type: 'decimal')
+                field(name: 'width',          type: 'decimal')
+                field(name: 'height',         type: 'decimal')
+            }
+        }.compareXML(
+            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+                 <xs:element name='Panel'>
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='orientation' minOccurs='1' maxOccurs='1'>
+                         <xs:simpleType>
+                           <xs:restriction base='xs:string'>
+                             <xs:enumeration value='Horizontal' />
+                             <xs:enumeration value='Vertical' />
+                           </xs:restriction>
+                         </xs:simpleType>
+                       </xs:element>
+                       <xs:element name='posx' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='posy' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='width' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='height' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>""")
+    }
+
+    def 'Storage'() {
+        expect:
+        SchemaTestBuilder.build('test', 'Storage', 0) {
+            struct(name: 'Storage') {
+                field(name: 'name',           type: 'string')
+                field(name: 'type',           type: 'string', values: ['Bin', 'Warehouse'])
+                field(name: 'posx',           type: 'decimal')
+                field(name: 'posy',           type: 'decimal')
+                field(name: 'width',          type: 'decimal')
+                field(name: 'height',         type: 'decimal')
+            }
+        }.compareXML(
+            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+                 <xs:element name='Storage'>
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='type' minOccurs='1' maxOccurs='1'>
+                         <xs:simpleType>
+                           <xs:restriction base='xs:string'>
+                             <xs:enumeration value='Bin' />
+                             <xs:enumeration value='Warehouse' />
+                           </xs:restriction>
+                         </xs:simpleType>
+                       </xs:element>
+                       <xs:element name='posx' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='posy' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='width' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='height' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>""")
+    }
+    
+    def 'Sparkline'() {
+        expect:
+        SchemaTestBuilder.build('test', 'Sparkline', 0) {
+            struct(name: 'Sparkline') {
+                field(name: 'name',           type: 'string')
+                field(name: 'format',         type: 'string')
+                field(name: 'unit',           type: 'string')
+                field(name: 'valueQuery',     type: 'string')
+                field(name: 'chartQuery',     type: 'string')
+                field(name: 'highQuery',      type: 'string')
+                field(name: 'lowQuery',       type: 'string')
+                field(name: 'posx',           type: 'decimal')
+                field(name: 'posy',           type: 'decimal')
+                field(name: 'width',          type: 'decimal')
+                field(name: 'height',         type: 'decimal')
+            }
+        }.compareXML(
+            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+                 <xs:element name='Sparkline'>
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='format' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='unit' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='valueQuery' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='chartQuery' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='highQuery' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='lowQuery' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='posx' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='posy' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='width' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='height' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>
+""")
+    }
+
+    def 'DashboardPanel'() {
+        expect:
+        SchemaTestBuilder.build('test', 'DashboardPanel', 0) {
+            struct(name: 'DashboardPanel') {
+                field(name: 'name',           type: 'string')
+                field(name: 'type',           type: 'string', values: ['Chart', 'TreeTable', 'Grid', 'TextArea'])
+                field(name: 'query',          type: 'string')
+                field(name: 'posx',           type: 'decimal')
+                field(name: 'posy',           type: 'decimal')
+                field(name: 'width',          type: 'decimal')
+                field(name: 'height',         type: 'decimal')
+            }
+        }.compareXML(
+            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+                 <xs:element name='DashboardPanel'>
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='type' minOccurs='1' maxOccurs='1'>
+                         <xs:simpleType>
+                           <xs:restriction base='xs:string'>
+                             <xs:enumeration value='Chart' />
+                             <xs:enumeration value='TreeTable' />
+                             <xs:enumeration value='Grid' />
+                             <xs:enumeration value='TextArea' />
+                           </xs:restriction>
+                         </xs:simpleType>
+                       </xs:element>
+                       <xs:element name='query' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='posx' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='posy' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='width' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='height' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>""")
+    }
 }
