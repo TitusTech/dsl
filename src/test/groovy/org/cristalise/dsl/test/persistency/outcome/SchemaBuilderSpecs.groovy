@@ -618,4 +618,78 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                  </xs:element>
                </xs:schema>""")
     }
+    def 'Transaction'() {
+        expect:
+        SchemaTestBuilder.build('test', 'Transaction', 0) {
+            struct(name: 'Transaction') {
+                field(name: 'name',           type: 'string')
+                field(name: 'type',           type: 'string', values: ['Chart', 'TreeTable', 'Grid', 'TextArea'])
+                field(name: 'query',          type: 'string')
+                field(name: 'posx',           type: 'decimal')
+                field(name: 'posy',           type: 'decimal')
+                field(name: 'width',          type: 'decimal')
+                field(name: 'height',         type: 'decimal')
+            }
+        }.compareXML(
+            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+                 <xs:element name='DashboardPanel'>
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='type' minOccurs='1' maxOccurs='1'>
+                         <xs:simpleType>
+                           <xs:restriction base='xs:string'>
+                             <xs:enumeration value='Chart' />
+                             <xs:enumeration value='TreeTable' />
+                             <xs:enumeration value='Grid' />
+                             <xs:enumeration value='TextArea' />
+                           </xs:restriction>
+                         </xs:simpleType>
+                       </xs:element>
+                       <xs:element name='query' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='posx' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='posy' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='width' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='height' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>""")
+    }
+    def 'Order'() {
+        expect:
+        SchemaTestBuilder.build('test', 'Order', 0) {
+            struct(name: 'Order') {
+                field(name: 'grade',          type: 'Grade')
+                field(name: 'season',         type: 'Season')
+                field(name: 'direction',      type: 'string', values: ['Intake', 'Outtake'])
+                field(name: 'customer',       type: 'Customer')
+                field(name: 'quantity',       type: 'decimal')
+            }
+        }.compareXML(
+            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+                 <xs:element name='DashboardPanel'>
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='type' minOccurs='1' maxOccurs='1'>
+                         <xs:simpleType>
+                           <xs:restriction base='xs:string'>
+                             <xs:enumeration value='Chart' />
+                             <xs:enumeration value='TreeTable' />
+                             <xs:enumeration value='Grid' />
+                             <xs:enumeration value='TextArea' />
+                           </xs:restriction>
+                         </xs:simpleType>
+                       </xs:element>
+                       <xs:element name='query' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='posx' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='posy' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='width' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='height' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>""")
+    }
 }
