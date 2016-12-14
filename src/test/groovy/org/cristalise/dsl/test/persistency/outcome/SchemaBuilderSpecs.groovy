@@ -623,9 +623,9 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                </xs:schema>""")
     }
 /*
-    def 'Transaction'() {
+	    def 'Transaction'() {
         expect:
-        SchemaTestBuilder.build('test', 'Transaction', 0) {
+        assert SchemaTestBuilder.build('test', 'Transaction', 0) {
             struct(name: 'Transaction') {
                 field(name: 'name',           type: 'string')
                 field(name: 'type',           type: 'string', values: ['Chart', 'TreeTable', 'Grid', 'TextArea'])
@@ -635,8 +635,8 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                 field(name: 'width',          type: 'decimal')
                 field(name: 'height',         type: 'decimal')
             }
-        }.compareXML(
-            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+        }.getSchema().schemaData == """<?xml version='1.0' encoding='utf-8'?>
+               <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
                  <xs:element name='DashboardPanel'>
                    <xs:complexType>
                      <xs:sequence>
@@ -659,11 +659,11 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                      </xs:sequence>
                    </xs:complexType>
                  </xs:element>
-               </xs:schema>""")
+               </xs:schema>""".replaceAll("\n               ", "\n")
     }
     def 'Order'() {
         expect:
-        SchemaTestBuilder.build('test', 'Order', 0) {
+        assert SchemaTestBuilder.build('test', 'Order', 0) {
             struct(name: 'Order') {
                 field(name: 'grade',          type: 'Grade')
                 field(name: 'season',         type: 'Season')
@@ -671,8 +671,8 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                 field(name: 'customer',       type: 'Customer')
                 field(name: 'quantity',       type: 'decimal')
             }
-        }.compareXML(
-            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+        }.getSchema().schemaData == """<?xml version='1.0' encoding='utf-8'?>
+               <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
                  <xs:element name='DashboardPanel'>
                    <xs:complexType>
                      <xs:sequence>
@@ -695,7 +695,7 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                      </xs:sequence>
                    </xs:complexType>
                  </xs:element>
-               </xs:schema>""")
+               </xs:schema>""".replaceAll("\n               ", "\n")
     }
 */
 }
