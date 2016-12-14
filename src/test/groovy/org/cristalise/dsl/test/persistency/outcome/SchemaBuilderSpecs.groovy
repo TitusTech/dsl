@@ -326,29 +326,6 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                </xs:schema>""")
     }
 
-    def 'CommodityHtml'() {
-        expect:
-		SchemaTestBuilder.build('test', 'Commodity', 0) {
-			struct(name: 'Commodity') {
-				field(name: 'code',           type: 'string')
-				field(name: 'name',           type: 'string')
-				field(name: 'color',          type: 'string',  multiplicity:'0..1')
-			}
-		}.compareHtml(
-			"""<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-                 <xs:element name="Commodity">
-                   <xs:complexType>
-                     <xs:sequence>
-                       <xs:element minOccurs="1" maxOccurs="1" name="code" type="xs:string"/>
-                       <xs:element minOccurs="1" maxOccurs="1" name="name" type="xs:string"/>
-                       <xs:element minOccurs="0" maxOccurs="1" name="color" type="xs:string"/>
-                     </xs:sequence>
-                   </xs:complexType>
-                 </xs:element>
-               </xs:schema>""")
-
-    }
-
     def 'Grade'() {
         expect:
         SchemaTestBuilder.build('test', 'Grade', 0) {

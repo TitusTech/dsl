@@ -23,7 +23,6 @@ package org.cristalise.dsl.test.builders
 import groovy.transform.CompileStatic
 
 import org.cristalise.dsl.persistency.outcome.SchemaBuilder
-import org.cristalise.dsl.persistency.outcome.FormDelegate
 import org.cristalise.kernel.persistency.outcome.Schema
 import org.cristalise.kernel.test.utils.KernelXMLUtility
 
@@ -34,31 +33,21 @@ import org.cristalise.kernel.test.utils.KernelXMLUtility
 @CompileStatic
 class SchemaTestBuilder extends SchemaBuilder {
 
-	String html
-	
-    public SchemaTestBuilder(SchemaBuilder sb, String html) {
+    public SchemaTestBuilder(SchemaBuilder sb) {
         name = sb.name
         module = sb.module
         version = sb.version
 
         schema = sb.schema
-		this.html = html
     }
 
     public static SchemaTestBuilder build(String module, String name, int version, Closure cl) {
         def sb = SchemaBuilder.build(module, name, version, cl)
 
-		def formDelegate = new FormDelegate()
-		formDelegate.processClosure(cl)
-		
-        return new SchemaTestBuilder(sb, formDelegate.html)
+        return new SchemaTestBuilder(sb)
     }
 
     public boolean compareXML(String xml) {
         return KernelXMLUtility.compareXML(xml, schema.schemaData);
-    }
-	
-    public boolean compareHtml(String html) {
-        return KernelXMLUtility.compareXML(html, this.html);
     }
 }
