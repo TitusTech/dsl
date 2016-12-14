@@ -308,8 +308,8 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
         expect:
         SchemaTestBuilder.build('test', 'Commodity', 0) {
             struct(name: 'Commodity') {
-                field(name: 'name',           type: 'string')
                 field(name: 'code',           type: 'string')
+                field(name: 'name',           type: 'string')
                 field(name: 'color',          type: 'string',  multiplicity:'0..1')
             }
         }.compareXML(
@@ -317,8 +317,8 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                  <xs:element name="Commodity">
                    <xs:complexType>
                      <xs:sequence>
-                       <xs:element minOccurs="1" maxOccurs="1" name="name" type="xs:string"/>
                        <xs:element minOccurs="1" maxOccurs="1" name="code" type="xs:string"/>
+                       <xs:element minOccurs="1" maxOccurs="1" name="name" type="xs:string"/>
                        <xs:element minOccurs="0" maxOccurs="1" name="color" type="xs:string"/>
                      </xs:sequence>
                    </xs:complexType>
@@ -326,12 +326,35 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                </xs:schema>""")
     }
 
+    def 'CommodityHtml'() {
+        expect:
+		SchemaTestBuilder.build('test', 'Commodity', 0) {
+			struct(name: 'Commodity') {
+				field(name: 'code',           type: 'string')
+				field(name: 'name',           type: 'string')
+				field(name: 'color',          type: 'string',  multiplicity:'0..1')
+			}
+		}.compareHtml(
+			"""<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                 <xs:element name="Commodity">
+                   <xs:complexType>
+                     <xs:sequence>
+                       <xs:element minOccurs="1" maxOccurs="1" name="code" type="xs:string"/>
+                       <xs:element minOccurs="1" maxOccurs="1" name="name" type="xs:string"/>
+                       <xs:element minOccurs="0" maxOccurs="1" name="color" type="xs:string"/>
+                     </xs:sequence>
+                   </xs:complexType>
+                 </xs:element>
+               </xs:schema>""")
+
+    }
+
     def 'Grade'() {
         expect:
         SchemaTestBuilder.build('test', 'Grade', 0) {
             struct(name: 'Grade') {
+                field(name: 'code',           type: 'string')  // cristal "name"
                 field(name: 'name',           type: 'string')
-                field(name: 'code',           type: 'string')
                 field(name: 'color',          type: 'string',  multiplicity:'0..1')
             }
         }.compareXML(
@@ -339,8 +362,8 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                  <xs:element name='Grade'>
                    <xs:complexType>
                      <xs:sequence>
-                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
                        <xs:element name='code' type='xs:string' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='name' type='xs:string' minOccurs='1' maxOccurs='1' />
                        <xs:element name='color' type='xs:string' minOccurs='0' maxOccurs='1' />
                      </xs:sequence>
                    </xs:complexType>
@@ -508,17 +531,19 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
 
     def 'Storage'() {
         expect:
-        SchemaTestBuilder.build('test', 'Storage', 0) {
+        assert SchemaTestBuilder.build('test', 'Storage', 0) {
             struct(name: 'Storage') {
                 field(name: 'name',           type: 'string')
                 field(name: 'type',           type: 'string', values: ['Bin', 'Warehouse'])
+                field(name: 'capacity',       type: 'decimal')
+                field(name: 'note',           type: 'string')
                 field(name: 'posx',           type: 'decimal')
                 field(name: 'posy',           type: 'decimal')
                 field(name: 'width',          type: 'decimal')
                 field(name: 'height',         type: 'decimal')
             }
-        }.compareXML(
-            """<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+        }.getSchema().schemaData == """<?xml version='1.0' encoding='utf-8'?>
+               <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>
                  <xs:element name='Storage'>
                    <xs:complexType>
                      <xs:sequence>
@@ -531,6 +556,8 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                            </xs:restriction>
                          </xs:simpleType>
                        </xs:element>
+                       <xs:element name='capacity' type='xs:decimal' minOccurs='1' maxOccurs='1' />
+                       <xs:element name='note' type='xs:string' minOccurs='1' maxOccurs='1' />
                        <xs:element name='posx' type='xs:decimal' minOccurs='1' maxOccurs='1' />
                        <xs:element name='posy' type='xs:decimal' minOccurs='1' maxOccurs='1' />
                        <xs:element name='width' type='xs:decimal' minOccurs='1' maxOccurs='1' />
@@ -538,7 +565,7 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                      </xs:sequence>
                    </xs:complexType>
                  </xs:element>
-               </xs:schema>""")
+               </xs:schema>""".replaceAll("\n               ", "\n")
     }
     
     def 'Sparkline'() {
@@ -618,6 +645,7 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                  </xs:element>
                </xs:schema>""")
     }
+/*
     def 'Transaction'() {
         expect:
         SchemaTestBuilder.build('test', 'Transaction', 0) {
@@ -692,4 +720,5 @@ class SchemaBuilderSpecs extends Specification implements CristalTestSetup {
                  </xs:element>
                </xs:schema>""")
     }
+*/
 }
